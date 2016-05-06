@@ -4,6 +4,7 @@ const chalk = require('chalk');
 const _ = require('lodash');
 const boom = require('boom');
 const express = require('express');
+const exampleData = require('@oddnetworks/oddworks-example-data');
 
 const oddworks = require('@oddnetworks/oddworks');
 
@@ -31,8 +32,10 @@ module.exports = StoresUtils.load(bus, config.stores)
 	})
 	// Seed the stores if config.seed is true
 	.then(() => {
-		if (config.seed) {
+		if (config.seed && config.dataDir) {
 			return require(`${config.dataDir}/seed`)(bus); // eslint-disable-line
+		} else {
+			return exampleData.data.nasa(bus);
 		}
 
 		return true;

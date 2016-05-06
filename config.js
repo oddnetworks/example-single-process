@@ -26,7 +26,7 @@ const jsonAPIService = oddworks.services.jsonApi;
 // We use these values for demonstration purposes
 const port = process.env.PORT || 3000;
 const jwtSecret = process.env.JWT_SECRET || 'secret';
-const dataDir = process.env.DATA_DIR || path.resolve(__dirname, './data/nasa');
+const dataDir = process.env.DATA_DIR;
 const environment = process.env.NODE_ENV || 'development';
 /* eslint-disable */
 const googleAnalyticsAnalyzer = eventsService.analyzers.googleAnalytics({trackingId: 'your-google-tracking-id'});
