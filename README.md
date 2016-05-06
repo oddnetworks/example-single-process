@@ -10,6 +10,8 @@ You can install this to Heroku as-is to get a quick reference API.
 
 [![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy)
 
+		Note that auto-deploying on Heroku will generate the JWT_SECRET environment variable.
+
 ## Setup
 
 After you've cloned this repo locally, follow these steps to get it running.

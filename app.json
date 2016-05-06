@@ -3,5 +3,11 @@
   "description": "A barebones Oddworks Server running in a single node process",
   "repository": "https://github.com/oddnetworks/example-single-process",
   "logo": "http://s3-us-west-2.amazonaws.com/odd-networks-assets/odd-networks.png",
-  "keywords": ["node", "odd networks", "oddworks"]
+  "keywords": ["node", "odd networks", "oddworks"],
+  "env": {
+    "JWT_SECRET": {
+      "description": "A secret key for generating JWTs for accessing the API.",
+      "generator": "secret"
+    }
+  }
 }
