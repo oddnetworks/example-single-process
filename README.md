@@ -12,10 +12,20 @@ You can install this to Heroku as-is to get a quick reference API.
 
 ## Setup
 
+After you've cloned this repo locally, follow these steps to get it running.
+
 ### Install node modules
 
 ```
 > npm install
+```
+
+### Start
+
+Locally you can use the following command to start the server:
+
+```
+> npm run dev
 ```
 
 ### Environment
@@ -28,14 +38,6 @@ There are a few environment variables that the configuration file `./config.js` 
 - `NODE_ENV` - defaults to `development`
 
 You may leave these values as-is.
-
-### Start
-
-Locally you can use the following command to start the server:
-
-```
-> npm run dev
-```
 
 ### Example Data
 
