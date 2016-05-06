@@ -44,3 +44,5 @@ By default we use the `nasa` seed function provided by the [@oddnetworks/oddwork
 __You do not need to override this, but if you want to:__
 
 The configuration file relies on example data and a seed script to get running. For examples of how to set this up yourself, and override the seed script using the `DATA_DIR` environment variable, please check out the [oddworks-example-data](https://github.com/oddnetworks/oddworks-example-data) repo.
+
+You can clone that repo, or if you want to start working with the seed script within this project you can use the [oddworks-cli](https://www.npmjs.com/package/@oddnetworks/oddworks-cli) and run `oddworks fetch-data`.
