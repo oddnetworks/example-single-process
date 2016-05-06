@@ -10,7 +10,7 @@ You can install this to Heroku as-is to get a quick reference API.
 
 [![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy)
 
-		Note that auto-deploying on Heroku will generate the JWT_SECRET environment variable.
+		Note: Auto-deploying on Heroku will generate the JWT_SECRET environment variable.
 
 ## Setup
 
@@ -18,17 +18,13 @@ After you've cloned this repo locally, follow these steps to get it running.
 
 ### Install node modules
 
-```
-> npm install
-```
+		$ npm install
 
 ### Start
 
 Locally you can use the following command to start the server:
 
-```
-> npm run dev
-```
+		$ npm run dev
 
 ### Environment
 
@@ -45,8 +41,18 @@ You may leave these values as-is.
 
 By default we use the `nasa` seed function provided by the [@oddnetworks/oddworks-example-data](https://www.npmjs.com/package/@oddnetworks/oddworks-example-data) package.
 
-__You do not need to override this, but if you want to:__
+The default data includes one channel named `nasa` and three platforms with ids of `apple-ios`, `apple-tv`, and `roku`. In order to generate an access token for the sample data, you can use the [oddworks-cli](https://www.npmjs.com/package/@oddnetworks/oddworks-cli) like so:
+
+		$ oddworks generate-token -c nasa -p apple-ios -j {your-jwt-secret}
+
+If you did not explicitly set the `JWT_SECRET` environment varaible, it will default to the value `secret`. If you deployed using the Heroku auto-deploy, this environment variable was auto-generated for you and can be found by running the following:
+
+		$ heroku config -a your-heroku-app-name | grep JWT_SECRET
+
+__You do not need to override example data, but if you want to:__
 
 The configuration file relies on example data and a seed script to get running. For examples of how to set this up yourself, and override the seed script using the `DATA_DIR` environment variable, please check out the [oddworks-example-data](https://github.com/oddnetworks/oddworks-example-data) repo. There you will find a [README for the nasa example data](https://github.com/oddnetworks/oddworks-example-data/tree/master/nasa).
 
-You can clone the `oddworks-example-data` repo, or if you want to start working with the seed script within this project you can use the [oddworks-cli](https://www.npmjs.com/package/@oddnetworks/oddworks-cli) and run `oddworks fetch-data`.
+You can clone the `oddworks-example-data` repo, or if you want to start working with the seed script within this project you can use the [oddworks-cli](https://www.npmjs.com/package/@oddnetworks/oddworks-cli) and run:
+
+		$ oddworks fetch-data
