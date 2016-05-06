@@ -1,0 +1,7 @@
+{
+  "name": "Oddworks Example Server - Single Process",
+  "description": "A barebones Oddworks Server",
+  "repository": "https://github.com/oddnetworks/example-single-process",
+  "logo": "http://s3-us-west-2.amazonaws.com/odd-networks-assets/odd-networks.png",
+  "keywords": ["node", "odd networks", "oddworks"]
+}
