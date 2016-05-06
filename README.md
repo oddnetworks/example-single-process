@@ -4,6 +4,12 @@ This is a quick example of an Oddworks server with all services, stores, and the
 
 This is only an example and should not be used in production. You would likely want to split out some of this functionality into separate processes.
 
+## Deploy It!
+
+You can install this to Heroku as-is to get a quick reference API.
+
+[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy)
+
 ## Setup
 
 ### Install node modules
@@ -30,12 +36,6 @@ Locally you can use the following command to start the server:
 ```
 > npm run dev
 ```
-
-### Heroku
-
-You can install this to Heroku as-is to get a quick reference API.
-
-[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy)
 
 ### Example Data
 
