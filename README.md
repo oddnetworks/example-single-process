@@ -26,7 +26,28 @@ Locally you can use the following command to start the server:
 
 		$ npm run dev
 
-### Environment
+## Hit the API
+
+Once your server is running, you can begin making requests like so:
+
+		$ curl -X GET -H "x-access-token: YOUR_TOKEN_HERE" -H "Accept: application/json" "http://localhost:3000/videos"
+
+__Required Headers__
+
+- `x-access-token` - the value here will depend on how you deployed and your environment. See [Access Tokens](#access-tokens)
+- `accept` - the value here should always be `application/json`
+
+### Access Tokens
+
+The default data includes one channel named `nasa` and three platforms with ids of `apple-ios`, `apple-tv`, and `roku`. In order to generate an access token for the sample data, you can use the [oddworks-cli](https://www.npmjs.com/package/@oddnetworks/oddworks-cli) like so:
+
+		$ oddworks generate-token -c nasa -p apple-ios -j {your-jwt-secret}
+
+If you did not explicitly set the `JWT_SECRET` environment varaible, it will default to the value `secret`. If you deployed using the Heroku auto-deploy, this environment variable was auto-generated for you and can be found by running the following:
+
+		$ heroku config -a your-heroku-app-name | grep JWT_SECRET
+
+## Environment
 
 There are a few environment variables that the configuration file `./config.js` uses to set up the server.
 
@@ -37,10 +58,13 @@ There are a few environment variables that the configuration file `./config.js` 
 
 You may leave these values as-is.
 
-### Example Data
+## Example Data
 
-By default we use the `nasa` seed function provided by the [@oddnetworks/oddworks-example-data](https://www.npmjs.com/package/@oddnetworks/oddworks-example-data) package.
 
+		$ curl -X GET -H "x-access-token: YOUR_TOKEN_HERE" -H "Accept: application/json" "http://localhost:3000/videos"
+By default we use the `nasa` seed function provided by the [@oddnetworks/oddworks-example-data](
+### Access Tokens
+https://www.npmjs.com/package/@oddnetworks/oddworks-example-data) package.
 The default data includes one channel named `nasa` and three platforms with ids of `apple-ios`, `apple-tv`, and `roku`. In order to generate an access token for the sample data, you can use the [oddworks-cli](https://www.npmjs.com/package/@oddnetworks/oddworks-cli) like so:
 
 		$ oddworks generate-token -c nasa -p apple-ios -j {your-jwt-secret}
@@ -48,6 +72,8 @@ The default data includes one channel named `nasa` and three platforms with ids 
 If you did not explicitly set the `JWT_SECRET` environment varaible, it will default to the value `secret`. If you deployed using the Heroku auto-deploy, this environment variable was auto-generated for you and can be found by running the following:
 
 		$ heroku config -a your-heroku-app-name | grep JWT_SECRET
+
+
 
 __You do not need to override example data, but if you want to:__
 
