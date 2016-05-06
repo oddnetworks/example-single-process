@@ -35,6 +35,7 @@ Locally you can use the following command to start the server:
 
 You can install this to Heroku as-is to get a quick reference API.
 
+[![Deploy to Heroku](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/oddnetworks/example-single-process/tree/master)
 
 ### Example Data
 
