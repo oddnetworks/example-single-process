@@ -35,7 +35,7 @@ module.exports = StoresUtils.load(bus, config.stores)
 		if (config.seed && config.dataDir) {
 			return require(`${config.dataDir}/seed`)(bus); // eslint-disable-line
 		} else {
-			return exampleData.data.nasa(bus);
+			return exampleData.nasa(bus);
 		}
 
 		return true;
