@@ -1,5 +1,7 @@
 # Oddworks Example Server - Single Process
 
+[![slack.oddnetworks.com](http://slack.oddnetworks.com/badge.svg)](http://slack.oddnetworks.com)
+
 This is a quick example of an Oddworks server with all services, stores, and the API running in a single process.
 
 This is only an example and should not be used in production. You would likely want to split out some of this functionality into separate processes.
