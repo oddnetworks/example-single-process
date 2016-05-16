@@ -49,14 +49,14 @@ module.exports = StoresUtils.load(bus, config.stores)
 		// Standard express middleware
 		app.use(middleware());
 
-		config.middleware(app);
-
 		app.get('/', (req, res, next) => {
 			res.body = {
 				message: 'Server is running'
 			};
 			next();
 		});
+
+		config.middleware(app);
 
 		app.use((req, res) => res.send(res.body));
 
