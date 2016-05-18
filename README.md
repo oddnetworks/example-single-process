@@ -4,7 +4,18 @@
 
 This is a quick example of an Oddworks server with all services, stores, and the API running in a single process.
 
-This is only an example and should not be used in production. You would likely want to split out some of this functionality into separate processes.
+This is only an example and should not be used in production. You would likely want to do things differently.
+
+This setup uses the following oddworks stores and services:
+
+- __[redis store](https://github.com/oddnetworks/oddworks/tree/master/lib/stores/redis)__
+- __[redis-search store](https://github.com/oddnetworks/oddworks/tree/master/lib/stores/redis-search)__
+- __[catalog service](https://github.com/oddnetworks/oddworks/blob/master/lib/services/catalog)__
+- __[events service](https://github.com/oddnetworks/oddworks/blob/master/lib/services/events)__ - with the __[google-analytics analyzer](https://github.com/oddnetworks/oddworks/tree/master/lib/services/events/analyzers)__
+- __[identity service](https://github.com/oddnetworks/oddworks/tree/master/lib/services/identity)__
+- __[json-api service](https://github.com/oddnetworks/oddworks/tree/master/lib/services/json-api)__
+
+_*Note_: We're using [fakeredis](https://www.npmjs.com/package/fakeredis) and make no guarantees about your data here. You would probably not want to use this in production.
 
 ## Deploy It!
 
