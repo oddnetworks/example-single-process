@@ -11,7 +11,7 @@
   "author": "",
   "license": "Apache-2.0",
   "dependencies": {
-    "@oddnetworks/oddworks": "^2.1.0",
+    "@oddnetworks/oddworks": "^2.2.0",
     "@oddnetworks/oddworks-example-data": "^1.0.0",
     "chalk": "^1.1.3",
     "fakeredis": "^1.0.3",
