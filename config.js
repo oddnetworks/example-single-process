@@ -140,16 +140,14 @@ module.exports = {
 		app.use(eventsService.router());
 
 		// Serialize all data into the JSON API Spec
-		app.use(jsonAPIService.middleware());
+		app.use(jsonAPIService.middleware.formatter());
+		app.use(jsonAPIService.middleware.deformatter());
 	}
 };
 
 // Warn the user that they should override the default configuration
-console.log(
-	chalk.black.bgYellow.bold('                                    WARNING!                                    ') +
-	chalk.yellow.bold('\nConfig Not Found') +
-	chalk.yellow.bold('\nLoading default server configuration.') +
-  chalk.yellow.bold('\nYou may override defaults by creating your own configuration file like so:') +
-  chalk.yellow.bold('\n\t$ cp ./config/default.js ./config/my-config.js') +
-  chalk.yellow.bold('\nand setting it in the environment variable CONFIG=./config/my-config.js') +
-  chalk.bgYellow('\n                                                                                '));
+oddworks.logger.warn('Config Not Found');
+oddworks.logger.warn('\tLoading default server configuration.');
+oddworks.logger.warn('\tYou may override defaults by creating your own configuration file like so:');
+oddworks.logger.warn('\t\t$ cp ./config.js ./my-config.js');
+oddworks.logger.warn('\tand using it in ./server.js');
