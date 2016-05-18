@@ -22,11 +22,40 @@ After you've cloned this repo locally, follow these steps to get it running.
 
 		$ npm install
 
+We use [foreman](https://www.npmjs.com/package/foreman) to manage multiple node processes via the `./Procfile`.
+
+		$ npm install -g foreman
+
+
+### Environment Variables
+
+You will need the following environment variables before running this example
+
+- `NODE_ENV` - this environment variable will tell which environment to run node in. The default value is `development`.
+- `PORT` - this environment variable will tell which port to run the [express](https://www.npmjs.com/package/express) server on. The default value is `3000`.
+- `JWT_SECRET` - this environment variable is used as the secret used to sign your [JWT tokens](https://jwt.io/). The default value is `secret`.
+- `DATA_DIR` - this environment variable will tell our server where to look for a `seed.js` file. By default this is `undefined` and we use `@oddnetworks/oddworks-example-data`'s `nasa` seed script. Read below about [Example Data](#example-data)
+- `GOOGLE_ANALYTICS_ID` - this environment variable is used to send event metrics into the __google-analytics event analyzer__. The default value is `UA-XXXX-XX`.
+
+You can set these manually, or you can use __foreman__. [foreman](https://www.npmjs.com/package/foreman) recognizes an `.env` file. You can set one locally for development purposes, but should not check it in to git.
+
+An example `.env` file:
+```
+NODE_ENV=development
+PORT=3000
+SYNC_INTERVAL=300000
+JWT_SECRET=your-secret-token
+```
+
 ### Start
 
 Locally you can use the following command to start the server:
 
-		$ npm run dev
+Using foreman:
+
+		$ nf start
+
+foreman uses our `Procfile` to start processes and scripts.
 
 ## Hit the API
 
@@ -49,33 +78,9 @@ If you did not explicitly set the `JWT_SECRET` environment varaible, it will def
 
 		$ heroku config -a your-heroku-app-name | grep JWT_SECRET
 
-## Environment
-
-There are a few environment variables that the configuration file `./config.js` uses to set up the server.
-
-- `PORT` - the port you would like to run the server on. The default value is `3000`
-- `JWT_SECRET` - the secret hash used for generating any JWT tokens needed to access your server's API. The default value is `secret`.
-- `DATA_DIR` - the directory that will be used to seed data. [See below](#example-data)
-- `NODE_ENV` - defaults to `development`
-
-You may leave these values as-is.
-
 ## Example Data
 
-
-		$ curl -X GET -H "x-access-token: YOUR_TOKEN_HERE" -H "Accept: application/json" "http://localhost:3000/videos"
-By default we use the `nasa` seed function provided by the [@oddnetworks/oddworks-example-data](
-### Access Tokens
-https://www.npmjs.com/package/@oddnetworks/oddworks-example-data) package.
-The default data includes one channel named `nasa` and three platforms with ids of `apple-ios`, `apple-tv`, and `roku`. In order to generate an access token for the sample data, you can use the [oddworks-cli](https://www.npmjs.com/package/@oddnetworks/oddworks-cli) like so:
-
-		$ oddworks generate-token -c nasa -p apple-ios -j {your-jwt-secret}
-
-If you did not explicitly set the `JWT_SECRET` environment varaible, it will default to the value `secret`. If you deployed using the Heroku auto-deploy, this environment variable was auto-generated for you and can be found by running the following:
-
-		$ heroku config -a your-heroku-app-name | grep JWT_SECRET
-
-
+By default we use the `nasa` seed function provided by the [@oddnetworks/oddworks-example-data](https://www.npmjs.com/package/@oddnetworks/oddworks-example-data) package.
 
 __You do not need to override example data, but if you want to:__
 
