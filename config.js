@@ -1,8 +1,5 @@
 'use strict';
 
-// const _ = require('lodash');
-const chalk = require('chalk');
-const path = require('path');
 const oddcast = require('oddcast');
 const oddworks = require('@oddnetworks/oddworks');
 
@@ -24,19 +21,20 @@ const jsonAPIService = oddworks.services.jsonApi;
 
 // The following should be set in your environment
 // We use these values for demonstration purposes
-const port = process.env.PORT || 3000;
-const jwtSecret = process.env.JWT_SECRET || 'secret';
-const dataDir = process.env.DATA_DIR;
-const environment = process.env.NODE_ENV || 'development';
+const PORT = process.env.PORT || 3000;
+const JWT_SECRET = process.env.JWT_SECRET || 'secret';
+const DATA_DIR = process.env.DATA_DIR;
+const ENVIRONMENT = process.env.NODE_ENV || 'development';
+const GOOGLE_ANALYTICS_ID = process.env.GOOGLE_ANALYTICS_ID || 'UA-XXXX-XX';
+
 /* eslint-disable */
-const googleAnalyticsAnalyzer = eventsService.analyzers.googleAnalytics({trackingId: 'your-google-tracking-id'});
-const mixpanelAnalyzer = eventsService.analyzers.mixpanel({apiKey: 'your-mixpanel-api-key', timeMultiplier: 1000})
+const googleAnalyticsAnalyzer = eventsService.analyzers.googleAnalytics({trackingId: GOOGLE_ANALYTICS_ID});
 /* eslint-enable */
 
 module.exports = {
-	env: environment,
-	port: port,
-	dataDir: dataDir,
+	env: ENVIRONMENT,
+	port: PORT,
+	dataDir: DATA_DIR,
 	seed: true,
 
 	oddcast: {
@@ -73,7 +71,7 @@ module.exports = {
 	services: [
 		{
 			service: identityService,
-			options: {jwtSecret: jwtSecret}
+			options: {jwtSecret: JWT_SECRET}
 		},
 		{
 			service: catalogService,
@@ -88,8 +86,7 @@ module.exports = {
 			options: {
 				redis,
 				analyzers: [
-					googleAnalyticsAnalyzer,
-					mixpanelAnalyzer
+					googleAnalyticsAnalyzer
 				]
 			}
 		}
