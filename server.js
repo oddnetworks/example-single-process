@@ -1,11 +1,10 @@
 'use strict';
 
-const chalk = require('chalk');
 const _ = require('lodash');
 const boom = require('boom');
 const express = require('express');
+const oddcast = require('oddcast');
 const exampleData = require('@oddnetworks/oddworks-example-data');
-
 const oddworks = require('@oddnetworks/oddworks');
 
 const StoresUtils = oddworks.storesUtils;
@@ -14,8 +13,6 @@ const middleware = oddworks.middleware;
 
 const config = require('./config');
 
-
-const oddcast = require('oddcast');
 const bus = oddcast.bus();
 const app = express();
 
@@ -34,11 +31,9 @@ module.exports = StoresUtils.load(bus, config.stores)
 	.then(() => {
 		if (config.seed && config.dataDir) {
 			return require(`${config.dataDir}/seed`)(bus); // eslint-disable-line
-		} else {
-			return exampleData.nasa(bus);
 		}
 
-		return true;
+		return exampleData.nasa(bus);
 	})
 
 	// Start configuring express
@@ -81,15 +76,13 @@ module.exports = StoresUtils.load(bus, config.stores)
 
 		if (!module.parent) {
 			app.listen(config.port, () => {
-				if (config.env === 'development' || config.env === 'test') {
-					console.log(chalk.green.bold(`Server is running on port: ${config.port}`));
-				}
+				oddworks.logger.info(`Server is running on port: ${config.port}`);
 			})
 			.on('error', error => {
-				console.error(`${error}`);
+				oddworks.logger.error(`${error}`);
 			});
 		}
 
 		return {bus, app};
 	})
-	.catch(err => console.log(err.stack));
+	.catch(err => oddworks.logger.error(err.stack));
