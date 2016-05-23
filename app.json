@@ -14,7 +14,7 @@
 			"value": "production"
 		},
 		"GOOGLE_ANALYTICS_ID": {
-			"description": "Your Google Analytics ID",
+			"description": "Your Google Analytics ID (optional)",
 			"value": "UA-XXXX-XX"
 		}
   }
