@@ -37,7 +37,7 @@ oddworks.logger.configure({
 			level: LOG_LEVEL,
 			colorize: true,
 			timestamp() {
-				return new Date().format('YYYY-MM-DDThh:mm:ss.SSSZ', UTC_OFFSET);
+				return new Date().format('YYYY-MM-DDThh:mm:ss.SSSZ', UTC_OFFSET); // eslint-disable-line no-use-extend-native/no-use-extend-native
 			},
 			handleExceptions: true
 		})
