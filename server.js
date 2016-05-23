@@ -4,8 +4,8 @@ const _ = require('lodash');
 const boom = require('boom');
 const express = require('express');
 const oddcast = require('oddcast');
-const exampleData = require('@oddnetworks/oddworks-example-data');
 const oddworks = require('@oddnetworks/oddworks');
+const exampleData = require('@oddnetworks/oddworks-example-data');
 
 const StoresUtils = oddworks.storesUtils;
 const ServicesUtils = oddworks.servicesUtils;
@@ -30,10 +30,10 @@ module.exports = StoresUtils.load(bus, config.stores)
 	// Seed the stores if config.seed is true
 	.then(() => {
 		if (config.seed && config.dataDir) {
-			return require(`${config.dataDir}/seed`)(bus); // eslint-disable-line
+			return require(`${config.dataDir}/seed`)(bus, oddworks.logger); // eslint-disable-line
 		}
 
-		return exampleData.nasa(bus);
+		return exampleData.nasa(bus, oddworks.logger);
 	})
 
 	// Start configuring express
