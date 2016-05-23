@@ -8,6 +8,14 @@
     "JWT_SECRET": {
       "description": "A secret key for generating JWTs for accessing the API.",
       "generator": "secret"
-    }
+    },
+    "NODE_ENV": {
+			"description": "Your application's Node environment",
+			"value": "production"
+		},
+		"GOOGLE_ANALYTICS_ID": {
+			"description": "Your Google Analytics ID",
+			"value": "UA-XXXX-XX"
+		}
   }
 }
