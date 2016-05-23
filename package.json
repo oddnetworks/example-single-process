@@ -16,7 +16,8 @@
     "fakeredis": "^1.0.3",
     "glob": "^7.0.3",
     "jsonwebtoken": "^6.2.0",
-    "oddcast": "^2.0.0"
+    "oddcast": "^2.0.0",
+    "winston": "^2.2.0"
   },
   "devDependencies": {
     "nodemon": "^1.9.1",
