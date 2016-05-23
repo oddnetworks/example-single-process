@@ -12,16 +12,23 @@
   "license": "Apache-2.0",
   "dependencies": {
     "@oddnetworks/oddworks": "^2.2.0",
-    "@oddnetworks/oddworks-example-data": "^1.0.0",
+    "@oddnetworks/oddworks-example-data": "^1.1.0",
     "fakeredis": "^1.0.3",
     "glob": "^7.0.3",
     "jsonwebtoken": "^6.2.0",
-    "oddcast": "^2.0.0"
+    "oddcast": "^2.0.0",
+    "winston": "^2.2.0"
   },
   "devDependencies": {
     "nodemon": "^1.9.1",
     "tap-spec": "^4.1.1",
     "tape": "^4.5.1",
     "xo": "^0.15.1"
+  },
+  "xo": {
+    "envs": [
+      "node",
+      "es6"
+    ]
   }
 }

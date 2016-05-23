@@ -2,6 +2,7 @@
 
 const oddcast = require('oddcast');
 const oddworks = require('@oddnetworks/oddworks');
+const winston = require('winston');
 
 // In your config, this would be real redis client
 const redis = require('fakeredis').createClient();
@@ -27,9 +28,21 @@ const DATA_DIR = process.env.DATA_DIR;
 const ENVIRONMENT = process.env.NODE_ENV || 'development';
 const GOOGLE_ANALYTICS_ID = process.env.GOOGLE_ANALYTICS_ID || 'UA-XXXX-XX';
 
-/* eslint-disable */
-const googleAnalyticsAnalyzer = eventsService.analyzers.googleAnalytics({trackingId: GOOGLE_ANALYTICS_ID});
-/* eslint-enable */
+// Set up the logger
+const UTC_OFFSET = 0;
+const LOG_LEVEL = ENVIRONMENT === 'production' ? 'info' : 'debug';
+oddworks.logger.configure({
+	transports: [
+		new winston.transports.Console({
+			level: LOG_LEVEL,
+			colorize: true,
+			timestamp() {
+				return new Date().format('YYYY-MM-DDThh:mm:ss.SSSZ', UTC_OFFSET); // eslint-disable-line no-use-extend-native/no-use-extend-native
+			},
+			handleExceptions: true
+		})
+	]
+});
 
 module.exports = {
 	env: ENVIRONMENT,
@@ -86,7 +99,7 @@ module.exports = {
 			options: {
 				redis,
 				analyzers: [
-					googleAnalyticsAnalyzer
+					eventsService.analyzers.googleAnalytics({trackingId: GOOGLE_ANALYTICS_ID})
 				]
 			}
 		}
@@ -144,7 +157,7 @@ module.exports = {
 
 // Warn the user that they should override the default configuration
 oddworks.logger.warn('Config Not Found');
-oddworks.logger.warn('\tLoading default server configuration.');
-oddworks.logger.warn('\tYou may override defaults by creating your own configuration file like so:');
-oddworks.logger.warn('\t\t$ cp ./config.js ./my-config.js');
-oddworks.logger.warn('\tand using it in ./server.js');
+oddworks.logger.warn('Loading default server configuration.');
+oddworks.logger.warn('You may override defaults by creating your own configuration file like so:');
+oddworks.logger.warn('\t$ cp ./config.js ./my-config.js');
+oddworks.logger.warn('and using it in ./server.js');
