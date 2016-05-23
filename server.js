@@ -4,6 +4,7 @@ const _ = require('lodash');
 const boom = require('boom');
 const express = require('express');
 const oddcast = require('oddcast');
+const jwt = require('jsonwebtoken');
 const oddworks = require('@oddnetworks/oddworks');
 const exampleData = require('@oddnetworks/oddworks-example-data');
 
@@ -34,6 +35,24 @@ module.exports = StoresUtils.load(bus, config.stores)
 		}
 
 		return exampleData.nasa(bus, oddworks.logger);
+	})
+
+	// log out if you feel it necessary
+	.then((loaded) => {
+		for (let object of loaded) {
+			oddworks.logger.debug(`${object.type}: ${object.id}`);
+			if (object.type === 'platform') {
+				const payload = {
+					version: 1,
+					channel: object.channel,
+					platform: object.id,
+					scope: ['platform']
+				};
+
+				const token = jwt.sign(payload, config.jwtSecret);
+				oddworks.logger.debug(`     JWT: ${token}`);
+			}
+		}
 	})
 
 	// Start configuring express

@@ -49,6 +49,7 @@ module.exports = {
 	port: PORT,
 	dataDir: DATA_DIR,
 	seed: true,
+	jwtSecret: JWT_SECRET,
 
 	oddcast: {
 		// override the default oddcast options/transports here
