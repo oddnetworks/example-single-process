@@ -157,7 +157,7 @@ module.exports = {
 
 // Warn the user that they should override the default configuration
 oddworks.logger.warn('Config Not Found');
-oddworks.logger.warn('\tLoading default server configuration.');
-oddworks.logger.warn('\tYou may override defaults by creating your own configuration file like so:');
-oddworks.logger.warn('\t\t$ cp ./config.js ./my-config.js');
-oddworks.logger.warn('\tand using it in ./server.js');
+oddworks.logger.warn('Loading default server configuration.');
+oddworks.logger.warn('You may override defaults by creating your own configuration file like so:');
+oddworks.logger.warn('\t$ cp ./config.js ./my-config.js');
+oddworks.logger.warn('and using it in ./server.js');
