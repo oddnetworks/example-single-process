@@ -12,7 +12,7 @@
   "license": "Apache-2.0",
   "dependencies": {
     "@oddnetworks/oddworks": "^2.2.0",
-    "@oddnetworks/oddworks-example-data": "^1.0.0",
+    "@oddnetworks/oddworks-example-data": "^1.1.0",
     "fakeredis": "^1.0.3",
     "glob": "^7.0.3",
     "jsonwebtoken": "^6.2.0",
