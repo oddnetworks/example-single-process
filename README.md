@@ -33,22 +33,15 @@ After you've cloned this repo locally, follow these steps to get it running.
 
 		$ npm install
 
-We use [foreman](https://www.npmjs.com/package/foreman) to manage multiple node processes via the `./Procfile`.
-
-		$ npm install -g foreman
-
-
 ### Environment Variables
 
-You will need the following environment variables before running this example
+You can override the default values we use, or run the server as-is.
 
 - `NODE_ENV` - this environment variable will tell which environment to run node in. The default value is `development`.
 - `PORT` - this environment variable will tell which port to run the [express](https://www.npmjs.com/package/express) server on. The default value is `3000`.
 - `JWT_SECRET` - this environment variable is used as the secret used to sign your [JWT tokens](https://jwt.io/). The default value is `secret`.
 - `DATA_DIR` - this environment variable will tell our server where to look for a `seed.js` file. By default this is `undefined` and we use `@oddnetworks/oddworks-example-data`'s `nasa` seed script. Read below about [Example Data](#example-data)
 - `GOOGLE_ANALYTICS_ID` - this environment variable is used to send event metrics into the __google-analytics event analyzer__. The default value is `UA-XXXX-XX`.
-
-You can override the default values, or run the server as-is.
 
 ### Startup
 
