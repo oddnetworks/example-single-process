@@ -48,25 +48,15 @@ You will need the following environment variables before running this example
 - `DATA_DIR` - this environment variable will tell our server where to look for a `seed.js` file. By default this is `undefined` and we use `@oddnetworks/oddworks-example-data`'s `nasa` seed script. Read below about [Example Data](#example-data)
 - `GOOGLE_ANALYTICS_ID` - this environment variable is used to send event metrics into the __google-analytics event analyzer__. The default value is `UA-XXXX-XX`.
 
-You can set these manually, or you can use __foreman__. [foreman](https://www.npmjs.com/package/foreman) recognizes an `.env` file. You can set one locally for development purposes, but should not check it in to git.
+You can override the default values, or run the server as-is.
 
-An example `.env` file:
-```
-NODE_ENV=development
-PORT=3000
-SYNC_INTERVAL=300000
-JWT_SECRET=your-secret-token
-```
-
-### Start
+### Startup
 
 Locally you can use the following command to start the server:
 
-Using foreman:
+		npm run dev
 
-		$ nf start
-
-foreman uses our `Procfile` to start processes and scripts.
+We use [nodemon](https://www.npmjs.com/package/nodemon) for development to automatically reload the server for us when file changes are detected.
 
 ## Hit the API
 
