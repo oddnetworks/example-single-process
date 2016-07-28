@@ -11,8 +11,8 @@
   "author": "",
   "license": "Apache-2.0",
   "dependencies": {
-    "@oddnetworks/oddworks": "^2.2.0",
-    "@oddnetworks/oddworks-example-data": "^2.0.0",
+    "@oddnetworks/oddworks": "^3.4.3",
+    "@oddnetworks/oddworks-example-data": "^3.0.0",
     "boom": "^3.0.0",
     "chalk": "^1.0.0",
     "express": "^4.0.0",
