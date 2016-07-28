@@ -1,16 +1,12 @@
 'use strict';
 
-const _ = require('lodash');
-const boom = require('boom');
 const express = require('express');
 const oddcast = require('oddcast');
-const jwt = require('jsonwebtoken');
 const oddworks = require('@oddnetworks/oddworks');
 const exampleData = require('@oddnetworks/oddworks-example-data');
 
 const StoresUtils = oddworks.storesUtils;
 const ServicesUtils = oddworks.servicesUtils;
-const middleware = oddworks.middleware;
 
 const config = require('./config');
 
@@ -23,46 +19,30 @@ bus.commands.use(config.oddcast.commands.options, config.oddcast.commands.transp
 bus.requests.use(config.oddcast.requests.options, config.oddcast.requests.transport);
 
 module.exports = StoresUtils.load(bus, config.stores)
-	// Initialize stores
 	.then(() => {
-		// Initialize services
 		return ServicesUtils.load(bus, config.services);
 	})
-	// Seed the stores if config.seed is true
-	.then(() => {
+
+	// Seed the data and pass the services along
+	.then(services => {
 		if (config.seed && config.dataDir) {
-			return require(`${config.dataDir}/seed`)(bus, oddworks.logger); // eslint-disable-line
+			return require(`${config.dataDir}/seed`)(bus).then(() => services); // eslint-disable-line
 		}
-
-		return exampleData.nasa(bus, oddworks.logger);
+		return exampleData.nasa(bus).then(() => services);
 	})
-
-	// log out if you feel it necessary
-	.then((loaded) => {
-		for (let object of loaded) {
-			oddworks.logger.debug(`${object.type}: ${object.id}`);
-			if (object.type === 'platform') {
-				const payload = {
-					version: 1,
-					channel: object.channel,
-					platform: object.id,
-					scope: ['platform']
-				};
-
-				const token = jwt.sign(payload, config.jwtSecret);
-				oddworks.logger.debug(`     JWT: ${token}`);
-			}
-		}
-	})
-
-	// Start configuring express
-	.then(() => {
+	.then(services => {
 		app.disable('x-powered-by');
 		app.set('trust proxy', 'loopback, linklocal, uniquelocal');
 
-		// Standard express middleware
-		app.use(middleware());
+		app.use(oddworks.middleware['header-parser']());
+		app.use(oddworks.middleware['body-parser-json']());
 
+		app.use(oddworks.middleware['request-accept']());
+		app.use(oddworks.middleware['request-options']());
+		app.use(oddworks.middleware['request-authenticate']({bus}));
+
+		app.use(services.identity.router({types: []}));
+		app.use(services.catalog.router());
 		app.get('/', (req, res, next) => {
 			res.body = {
 				message: 'Server is running'
@@ -70,38 +50,30 @@ module.exports = StoresUtils.load(bus, config.stores)
 			next();
 		});
 
-		config.middleware(app);
+		app.use(oddworks.middleware['response-general']());
+		app.use(oddworks.middleware['response-vary']());
+		app.use(oddworks.middleware['response-cache-control']());
+		app.use(oddworks.middleware['response-json-api']({bus}));
 
-		app.use((req, res) => res.send(res.body));
+		app.use((err, req, res, next) => {
+			console.error(err.stack);
 
-		// 404
-		app.use((req, res, next) => next(boom.notFound()));
-
-		// 5xx
-		app.use(function handleError(err, req, res, next) {
-			if (err) {
-				var statusCode = _.get(err, 'output.statusCode', (err.status || 500));
-				if (!_.has(err, 'output.payload')) {
-					err = boom.wrap(err, err.status);
-				}
-
-				res.status(statusCode || 500);
-				res.body = err.output.payload;
-				res.send(res.body);
-			} else {
-				next();
+			if (err.isBoom) {
+				return res.sendStatus(err.output.payload.statusCode);
 			}
+
+			res.sendStatus(500);
 		});
 
 		if (!module.parent) {
-			app.listen(config.port, () => {
-				oddworks.logger.info(`Server is running on port: ${config.port}`);
+			app.listen(config.express.port, () => {
+				console.info(`Server is running on port: ${config.express.port}`);
 			})
 			.on('error', error => {
-				oddworks.logger.error(`${error}`);
+				console.error(error.stack);
 			});
 		}
 
 		return {bus, app};
 	})
-	.catch(err => oddworks.logger.error(err.stack));
+	.catch(err => console.error(err.stack));
