@@ -55,22 +55,103 @@ We use [nodemon](https://www.npmjs.com/package/nodemon) for development to autom
 
 Once your server is running, you can begin making requests like so:
 
-		$ curl -X GET -H "x-access-token: YOUR_TOKEN_HERE" -H "Accept: application/json" "http://localhost:3000/videos"
+		$ curl -X GET -H "Authorization: Bearer YOUR_TOKEN_HERE" -H "Accept: application/json" "http://localhost:3000/config"
 
 __Required Headers__
 
-- `x-access-token` - the value here will depend on how you deployed and your environment. See [Access Tokens](#access-tokens)
-- `accept` - the value here should always be `application/json`
+- `Authorization` - the value here will depend on how you deployed and your environment. See [Tokens](#tokens)
+- `Accept` - the value here should always be `application/json`
 
-### Access Tokens
+### Tokens
 
-The default data includes one channel named `nasa` and three platforms with ids of `apple-ios`, `apple-tv`, and `roku`. In order to generate an access token for the sample data, you can use the [oddworks-cli](https://www.npmjs.com/package/@oddnetworks/oddworks-cli) like so:
+There are 2 types of tokens used within Oddworks. Using the **Oddworks SDKs** this will be handle the app loading sequence for you, but for for your own knowledge you should understand how tokens are used.
 
-		$ oddworks generate-token -c nasa -p apple-ios -j {your-jwt-secret}
+The high level flow is:
 
+**First App Install**
+
+1. Generate **platform token** and submit app to the app store.
+2. App is downloaded by a user and opens it.
+3. `/config` is hit with a **platform token**.
+4. Since the **platform token** does not contain a user, `/config` returns a new user with a new **user token** to use from now on.
+5. The app saves the **user token** on the device.
+6. Requests to `/collections`, `/videos`, etc. use the new **user token**.
+
+**Repeated Usage**
+
+1. User opens app again days later.
+2. Device loads the **user token** from the device.
+3. `/config` is hit with a **user token** instead of the **platform token**.
+4. `/config` now only returns its normal response and does not create a new user and token.
+5. Requests to `/collections`, `/videos`, etc. continue to use the loaded **user token**.
+
+#### Platform Token
+
+```json
+{
+  "channel": "nasa",
+  "platform": "web",
+  "aud": [
+    "platform"
+  ],
+  "iss": "urn:oddworks"
+}
+```
+
+This token contains the **channel** and **platform** and is embedded into the app when you submit it to the app store. This token will only allow the device access to the `/config` endpoint. After hitting the `/config` endpoint with a **platform token** you will get a response that contains an automatically generated new anonymous user. This new user is saved in the user table with a new UUID. You will also get a JWT specifically for that user to use for subsequent API requests.
+
+```json
+{
+  "data": {
+    "id": "nasa-web",
+    "type": "config",
+    "attributes": {
+    	"features": ...,
+    	"views": ...,
+    	"user": {
+			"id": "5e3e073b-8477-4e3f-9061-a543a819cdff",
+        	"channel": "nasa",
+			"type": "user"
+		},
+		"jwt": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjaGFubmVsIjoibmFzYSIsInBsYXRmb3JtIjoid2ViIiwidXNlciI6IjVlM2UwNzNiLTg0NzctNGUzZi05MDYxLWE1NDNhODE5Y2RmZiIsImlhdCI6MTQ2OTcxOTEwNCwiYXVkIjpbInBsYXRmb3JtIl0sImlzcyI6InVybjpvZGR3b3JrcyJ9.SOANEq0qxkiRL5u3RCAf5glYvDAMtz9LidrLvwsnaTE"
+    }
+  }
+}
+```
+
+**NOTE:** You should save this JWT on the device forever to indicate that is a user on the device. The next time your app loads and it hits `/config` it will not generate a user since a **user token** was used.
+
+#### User Token
+
+```json
+{
+  "channel": "nasa",
+  "platform": "web",
+  "user": "12345",
+  "aud": [
+    "platform"
+  ],
+  "iss": "urn:oddworks"
+}
+```
+
+This token is identical to the **platform token** except it contains the user ID defined in the user table that the device is making the request for. This token is required for all API calls except for `/config`. The reason for this is so you can track accurate user data throughout the system.
+
+#### JWT Secret
 If you did not explicitly set the `JWT_SECRET` environment varaible, it will default to the value `secret`. If you deployed using the Heroku auto-deploy, this environment variable was auto-generated for you and can be found by running the following:
 
 		$ heroku config -a your-heroku-app-name | grep JWT_SECRET
+		
+#### Generating Tokens
+
+We like to use [jwt.io](https://jwt.io) since it provides a nice interface for generating tokens.
+
+1. Copy either of the token examples above.
+2. Paste it into the "PAYLOAD: DATA" section on the right.
+3. Ensure the JWT secret in the "VERIFY SIGNATURE" section matches the `JWT_SECRET` environment variable you have set.
+4. On the left will have a generated JWT you can copy and paste into the `Authorization` header.
+
+**NOTE:** DO NOT submit an app to the app with a **user token** embedded into the app. It will yield ineffective analytics and cause you to resubmit the app to fix the problem.
 
 ## Example Data
 
