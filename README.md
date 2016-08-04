@@ -11,7 +11,6 @@ This setup uses the following oddworks stores and services:
 - __[redis store](https://github.com/oddnetworks/oddworks/tree/master/lib/stores/redis)__
 - __[redis-search store](https://github.com/oddnetworks/oddworks/tree/master/lib/stores/redis-search)__
 - __[catalog service](https://github.com/oddnetworks/oddworks/blob/master/lib/services/catalog)__
-- __[events service](https://github.com/oddnetworks/oddworks/blob/master/lib/services/events)__ - with the __[google-analytics analyzer](https://github.com/oddnetworks/oddworks/tree/master/lib/services/events/analyzers)__
 - __[identity service](https://github.com/oddnetworks/oddworks/tree/master/lib/services/identity)__
 - __[json-api service](https://github.com/oddnetworks/oddworks/tree/master/lib/services/json-api)__
 
@@ -25,42 +24,63 @@ You can install this to Heroku as-is to get a quick reference API.
 
 		Note: Auto-deploying on Heroku will generate the JWT_SECRET environment variable.
 
+----
+
 ## Setup
 
 After you've cloned this repo locally, follow these steps to get it running.
 
-### Install node modules
+### Step One: Install node modules
 
-		$ npm install
+		$ make install
 
-### Environment Variables
+#### Environment Variables
 
-You can override the default values we use, or run the server as-is.
+You can override the default values we use in `example.env`, or run the server as-is.
 
 - `NODE_ENV` - this environment variable will tell which environment to run node in. The default value is `development`.
 - `PORT` - this environment variable will tell which port to run the [express](https://www.npmjs.com/package/express) server on. The default value is `3000`.
 - `JWT_SECRET` - this environment variable is used as the secret used to sign your [JWT tokens](https://jwt.io/). The default value is `secret`.
 - `DATA_DIR` - this environment variable will tell our server where to look for a `seed.js` file. By default this is `undefined` and we use `@oddnetworks/oddworks-example-data`'s `nasa` seed script. Read below about [Example Data](#example-data)
-- `GOOGLE_ANALYTICS_ID` - this environment variable is used to send event metrics into the __google-analytics event analyzer__. The default value is `UA-XXXX-XX`.
 
-### Startup
+### Step 2: Startup
 
 Locally you can use the following command to start the server:
 
-		npm run dev
+		make run-dev
 
 We use [nodemon](https://www.npmjs.com/package/nodemon) for development to automatically reload the server for us when file changes are detected.
 
-## Hit the API
+### Step 3: Generate Your Platform Config Token
+
+1. Copy this json
+```json
+{
+  "channel": "nasa",
+  "platform": "web",
+  "aud": [
+    "platform"
+  ],
+  "iss": "urn:oddworks"
+}
+```
+2. Head over to [JWT.io](https://jwt.io) and use the above json as the body, and use `secret` as the secret.
+3. Use the generated JWT string in step 4.
+
+### Step 4: Hit the `/config` endpoint with your new platform token
 
 Once your server is running, you can begin making requests like so:
 
-		$ curl -X GET -H "Authorization: Bearer YOUR_TOKEN_HERE" -H "Accept: application/json" "http://localhost:3000/config"
+		$ curl -X GET -H "Authorization: Bearer YOUR_TOKEN_HERE" -H "Content-Type: application/json" "http://localhost:3000/config"
 
 __Required Headers__
 
 - `Authorization` - the value here will depend on how you deployed and your environment. See [Tokens](#tokens)
-- `Accept` - the value here should always be `application/json`
+- `Content-Type` - the value here should always be `application/json`
+
+The returned `JWT` will be your **user token** for all future requests.
+
+----
 
 ### Tokens
 
