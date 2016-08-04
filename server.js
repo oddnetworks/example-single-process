@@ -63,6 +63,7 @@ module.exports = StoresUtils.load(bus, config.stores)
 			}
 
 			res.sendStatus(500);
+			next();
 		});
 
 		if (!module.parent) {
