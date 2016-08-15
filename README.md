@@ -75,7 +75,7 @@ Once your server is running, you can begin making requests like so:
 
 __Required Headers__
 
-- `Authorization` - the value here will depend on how you deployed and your environment. See [Tokens](#tokens)
+- `Authorization` - the value here will be `bearer YOUR_TOKEN_HERE`.  The value of your token will depend on how you deployed and your environment. See [Tokens](#tokens)
 - `Content-Type` - the value here should always be `application/json`
 
 The returned `JWT` will be your **user token** for all future requests.
