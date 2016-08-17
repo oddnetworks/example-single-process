@@ -36,7 +36,7 @@ After you've cloned this repo locally, follow these steps to get it running.
 
 #### Environment Variables
 
-You can override the default values we use in `example.env`, or run the server as-is.
+You can copy over `.env.example` into your own `.env` file to override the default values, or run the server as-is.
 
 - `NODE_ENV` - this environment variable will tell which environment to run node in. The default value is `development`.
 - `PORT` - this environment variable will tell which port to run the [express](https://www.npmjs.com/package/express) server on. The default value is `3000`.

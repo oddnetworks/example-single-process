@@ -1,5 +1,7 @@
 'use strict';
 
+require('dotenv').config({silent: true});
+
 const oddcast = require('oddcast');
 const oddworks = require('@oddnetworks/oddworks');
 
@@ -11,12 +13,15 @@ const redisSearchStore = oddworks.stores.redisSearch;
 const identityService = oddworks.services.identity;
 const catalogService = oddworks.services.catalog;
 
+const ENVIRONMENT = process.env.NODE_ENV || 'development';
+const PORT = process.env.PORT || 3000;
+const JWT_SECRET = process.env.JWT_SECRET || 'secret';
 module.exports = {
-	env: process.env.NODE_ENV,
+	env: ENVIRONMENT,
 
 	express: {
-		port: process.env.PORT,
-		jwtSecret: process.env.JWT_SECRET
+		port: PORT,
+		jwtSecret: JWT_SECRET
 	},
 
 	oddcast: {
@@ -48,7 +53,7 @@ module.exports = {
 	services: [
 		{
 			service: identityService,
-			options: {jwtSecret: process.env.JWT_SECRET}
+			options: {jwtSecret: JWT_SECRET}
 		},
 		{
 			service: catalogService,
