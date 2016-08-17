@@ -41,7 +41,7 @@ You can copy over `.env.example` into your own `.env` file to override the defau
 - `NODE_ENV` - this environment variable will tell which environment to run node in. The default value is `development`.
 - `PORT` - this environment variable will tell which port to run the [express](https://www.npmjs.com/package/express) server on. The default value is `3000`.
 - `JWT_SECRET` - this environment variable is used as the secret used to sign your [JWT tokens](https://jwt.io/). The default value is `secret`.
-- `DATA_DIR` - this environment variable will tell our server where to look for a `seed.js` file. By default this is `undefined` and we use `@oddnetworks/oddworks-example-data`'s `nasa` seed script. Read below about [Example Data](#example-data)
+- `SEED_SCRIPT` - this environment variable will tell our server where to look for a seed script file. You would override this like so `SEED_SCRIPT=/path/to/my/seed.js` By default this is `undefined` and we use `@oddnetworks/oddworks-example-data`'s `nasa()` seed function. Read below about [Example Data](#example-data)
 
 ### Step 2: Startup
 
@@ -161,7 +161,7 @@ This token is identical to the **platform token** except it contains the user ID
 If you did not explicitly set the `JWT_SECRET` environment varaible, it will default to the value `secret`. If you deployed using the Heroku auto-deploy, this environment variable was auto-generated for you and can be found by running the following:
 
 		$ heroku config -a your-heroku-app-name | grep JWT_SECRET
-		
+
 #### Generating Tokens
 
 We like to use [jwt.io](https://jwt.io) since it provides a nice interface for generating tokens.
@@ -175,12 +175,10 @@ We like to use [jwt.io](https://jwt.io) since it provides a nice interface for g
 
 ## Example Data
 
-By default we use the `nasa` seed function provided by the [@oddnetworks/oddworks-example-data](https://www.npmjs.com/package/@oddnetworks/oddworks-example-data) package.
+By default we use the `nasa()` seed function provided by the [@oddnetworks/oddworks-example-data](https://www.npmjs.com/package/@oddnetworks/oddworks-example-data) package.
 
-__You do not need to override example data, but if you want to:__
+### If you want to override the NASA Example Data
 
-The configuration file relies on example data and a seed script to get running. For examples of how to set this up yourself, and override the seed script using the `DATA_DIR` environment variable, please check out the [oddworks-example-data](https://github.com/oddnetworks/oddworks-example-data) repo.
+The configuration file relies on example data and a seed script to get running. For examples of how to set this up yourself, and override the seed script using the `SEED_SCRIPT` environment variable, please check out the [oddworks-example-data](https://github.com/oddnetworks/oddworks-example-data) repo.
 
-You can clone the `oddworks-example-data` repo, or if you want to start working with the seed script within this project you can use the [oddworks-cli](https://www.npmjs.com/package/@oddnetworks/oddworks-cli) and run:
-
-		$ oddworks fetch-data
+You can clone the `oddworks-example-data` repo, or check out `seed.js.example` to get an idea of how a script might work.

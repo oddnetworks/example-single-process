@@ -25,8 +25,8 @@ module.exports = StoresUtils.load(bus, config.stores)
 
 	// Seed the data and pass the services along
 	.then(services => {
-		if (config.seed && config.dataDir) {
-			return require(`${config.dataDir}/seed`)(bus).then(() => services); // eslint-disable-line
+		if (config.seedScript) {
+			return require(config.seedScript)(bus).then(() => services); // eslint-disable-line
 		}
 		return exampleData.nasa(bus).then(() => services);
 	})

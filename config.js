@@ -16,8 +16,12 @@ const catalogService = oddworks.services.catalog;
 const ENVIRONMENT = process.env.NODE_ENV || 'development';
 const PORT = process.env.PORT || 3000;
 const JWT_SECRET = process.env.JWT_SECRET || 'secret';
+const SEED_SCRIPT = process.env.SEED_SCRIPT || undefined;
+
 module.exports = {
 	env: ENVIRONMENT,
+
+	seedScript: SEED_SCRIPT,
 
 	express: {
 		port: PORT,
