@@ -1,7 +1,5 @@
 'use strict';
 
-require('dotenv').config({silent: true});
-
 const oddcast = require('oddcast');
 const oddworks = require('@oddnetworks/oddworks');
 
