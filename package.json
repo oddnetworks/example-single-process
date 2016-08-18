@@ -6,7 +6,7 @@
   "scripts": {
     "test": "xo && tape test/**/*-test.js | tap-spec",
     "dev": "NODE_ENV=$npm_config_env HOST=$npm_config_host PORT=$npm_config_port JWT_SECRET=$npm_config_jwt_secret LOG_LEVEL=$npm_config_log_level DEBUG=$npm_config_debug nodemon server.js -e js,json",
-    "start": "nf start"
+    "start": "node server.js -e js,json"
   },
   "author": "Odd Networks <info@oddnetworks.com>",
   "license": "Apache-2.0",
