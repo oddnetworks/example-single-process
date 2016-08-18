@@ -32,11 +32,11 @@ After you've cloned this repo locally, follow these steps to get it running.
 
 ### Step One: Install node modules
 
-		$ make install
+		$ npm install
 
 #### Environment Variables
 
-You can copy over `.env.example` into your own `.env` file to override the default values, or run the server as-is.
+You can copy over `.npmrc.example` into your own `.npmrc` file to override the default values for the `dev` script in `package.json`, or run the server as-is.
 
 - `NODE_ENV` - this environment variable will tell which environment to run node in. The default value is `development`.
 - `PORT` - this environment variable will tell which port to run the [express](https://www.npmjs.com/package/express) server on. The default value is `3000`.
@@ -47,7 +47,7 @@ You can copy over `.env.example` into your own `.env` file to override the defau
 
 Locally you can use the following command to start the server:
 
-		make run-dev
+		npm run dev
 
 We use [nodemon](https://www.npmjs.com/package/nodemon) for development to automatically reload the server for us when file changes are detected.
 

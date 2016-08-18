@@ -5,7 +5,7 @@
   "main": "server.js",
   "scripts": {
     "test": "xo && tape test/**/*-test.js | tap-spec",
-    "dev": "if [ -f .env ] ; then source .env; fi; nodemon server.js -e js,json",
+    "dev": "NODE_ENV=$npm_config_env HOST=$npm_config_host PORT=$npm_config_port JWT_SECRET=$npm_config_jwt_secret LOG_LEVEL=$npm_config_log_level DEBUG=$npm_config_debug nodemon server.js -e js,json",
     "start": "nf start"
   },
   "author": "",

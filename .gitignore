@@ -37,4 +37,4 @@ data/**/*.DELETE
 #intellij
 api.iml
 
-.env
+.npmrc
