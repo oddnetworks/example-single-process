@@ -5,7 +5,7 @@
   "main": "server.js",
   "scripts": {
     "test": "xo && tape test/**/*-test.js | tap-spec",
-    "dev": "nodemon server.js -e js,json",
+    "dev": "if [ -f .env ] ; then source .env; fi; nodemon server.js -e js,json",
     "start": "nf start"
   },
   "author": "",
