@@ -54,7 +54,7 @@ module.exports = StoresUtils.load(bus, config.stores)
 		app.use(oddworks.middleware['response-vary']());
 		app.use(oddworks.middleware['response-cache-control']());
 		app.use(oddworks.middleware['response-json-api']({bus}));
-
+		app.use(oddworks.middleware['response-send']());
 		app.use((err, req, res, next) => {
 			console.error(err.stack);
 
