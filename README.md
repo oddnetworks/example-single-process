@@ -1,6 +1,6 @@
 # Oddworks Example Server - Single Process
 
-[![slack.oddnetworks.com](http://slack.oddnetworks.com/badge.svg)](http://slack.oddnetworks.com)
+[![Gitter chat](https://badges.gitter.im/oddwnetworks/oddworks.png)](https://gitter.im/oddnetworks/oddworks "Gitter chat")
 
 This is a quick example of an Oddworks server with all services, stores, and the API running in a single process.
 
