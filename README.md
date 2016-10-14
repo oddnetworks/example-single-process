@@ -84,7 +84,7 @@ The returned `JWT` will be your **user token** for all future requests.
 
 ### Tokens
 
-There are 2 types of tokens used within Oddworks. Using the **Oddworks SDKs** this will be handle the app loading sequence for you, but for for your own knowledge you should understand how tokens are used.
+There are 2 types of tokens used within Oddworks. Using the **Oddworks SDKs** this will be handle the app loading sequence for you, but for your own knowledge you should understand how tokens are used.
 
 The high level flow is:
 
