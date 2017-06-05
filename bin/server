@@ -1,0 +1,27 @@
+#!/usr/bin/env node
+'use strict';
+
+const throng = require('throng');
+
+throng({
+	workers: process.env.WEB_CONCURRENCY || 1,
+	lifetime: Infinity
+}, () => {
+	const server = require('../server');
+
+	server.main()
+		.then(app => {
+			if (app.environment === 'development') {
+				const addr = app.API.server.instance.address();
+				console.log('API server successfully started in development mode.');
+				console.log('Point your HTTP client to http://%s:%s', addr.address, addr.port);
+				console.log('Press CTRL-c to quit');
+			}
+		})
+		.catch(err => {
+			console.error('API server failed to start.');
+			console.error('main execution error');
+			console.error(err.stack || err.message || err);
+			process.exit(1);
+		});
+});

@@ -9,9 +9,20 @@
       "description": "A secret key for generating JWTs for accessing the API.",
       "generator": "secret"
     },
+		"JWT_ISSUER": {
+			"description": "A URN to identify the server issuing the JWT",
+			"value": "urn:your-unique-identifier-string"
+		},
+		"LOG_LEVEL": {
+			"description": "The logging level",
+			"value": "error"
+		},
     "NODE_ENV": {
 			"description": "Your application's Node environment",
 			"value": "production"
 		}
-  }
+  },
+	"addons": [
+		"openredis"
+	]
 }

@@ -1,0 +1,9 @@
+#!/usr/bin/env node
+'use strict';
+
+const cli = require('../cli');
+
+cli.main().catch(err => {
+	console.error('Experienced an error:');
+	console.error(err.stack || err.message || err);
+});
