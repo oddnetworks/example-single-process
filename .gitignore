@@ -38,3 +38,4 @@ data/**/*.DELETE
 api.iml
 
 .npmrc
+.env
