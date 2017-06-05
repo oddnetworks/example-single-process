@@ -1,1 +1,1 @@
-web: node server.js -e js,json
+web: npm start
